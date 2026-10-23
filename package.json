@@ -1,6 +1,6 @@
 {
   "name": "yilibazi-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Deterministic Four Pillars (BaZi) core with every boundary convention disclosed — slot-midpoint granularity, exact solar terms, early-Zi day rollover, and an ambiguity report that shows the alternative chart when a convention would change the answer.",
   "keywords": [
     "bazi",
@@ -10,7 +10,10 @@
     "chinese-astrology",
     "solar-terms",
     "lunar-calendar",
-    "deterministic"
+    "deterministic",
+    "mcp",
+    "model-context-protocol",
+    "agent-tools"
   ],
   "license": "MIT",
   "author": "Yili Paipan <https://www.yilibazi.com>",
@@ -43,7 +46,9 @@
     "src/",
     "dist/",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "mcp/",
+    "SKILL.md"
   ],
   "sideEffects": false,
   "engines": {
@@ -53,12 +58,17 @@
     "test": "node --test",
     "build": "node scripts/build-cjs.mjs",
     "prepack": "npm run build && npm test",
-    "pack:dry": "npm pack --dry-run"
+    "pack:dry": "npm pack --dry-run",
+    "mcp": "node mcp/server.js"
   },
   "dependencies": {
     "lunar-javascript": "^1.7.7"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
     "esbuild": "^0.21.5"
+  },
+  "bin": {
+    "yilibazi-core-mcp": "./mcp/server.js"
   }
 }

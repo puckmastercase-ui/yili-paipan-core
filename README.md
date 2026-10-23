@@ -88,6 +88,35 @@ verify({ expectDigest: chartDigest().digest })            // → { ok: true, ...
 
 Pin the digest in your own test suite: if a future release changes how any of 336 fixed charts come out, `verify({ expectDigest })` returns `ok: false` instead of quietly producing different pillars.
 
+## MCP server (agent-callable)
+
+The package ships a **zero-dependency** MCP server (stdio, JSON-RPC 2.0), so an agent can compute a chart instead of guessing one:
+
+```bash
+npx yilibazi-core-mcp        # or: npm exec --package=yilibazi-core yilibazi-core-mcp
+```
+
+| Tool | Use it when |
+|---|---|
+| `bazi_paipan` | You need the four pillars for a date + one of 13 slots |
+| `bazi_ambiguity` | The birth sits near a solar term, midnight, or inside China's 1986–1991 DST — returns the alternative chart(s) instead of letting a convention pick silently |
+| `bazi_solar_terms` | You need the exact *jie* instants for a year, or need to know whether a term falls inside a given slot |
+| `bazi_verify` | You are about to state what this engine does or does not guarantee — returns the offline self-checks **and** the declared gaps |
+
+Client configuration (any MCP client):
+
+```json
+{
+  "mcpServers": {
+    "yilibazi-core": { "command": "npx", "args": ["yilibazi-core-mcp"] }
+  }
+}
+```
+
+The server is hand-written on purpose: pulling the protocol SDK into a package that promises "one calendar dependency" would be a poor trade. Compatibility is therefore proven the other way round — the **official SDK client** connects to this server in the test suite (`test/mcp-sdk.test.mjs`), so "it works with real clients" is a test result, not a claim.
+
+Agent-facing usage rules (when to call, how to read results, what never to assert): [`SKILL.md`](./SKILL.md).
+
 ## Reproducing the day pillar by hand
 
 1. **1949-10-01 = 甲子** (index 0).
