@@ -1,7 +1,7 @@
 // 生成 CJS 版本 + 类型声明（发布产物 dist/）
 // 说明：源码是 ESM；CJS 只是为了兼容 require()。用 esbuild 打包，lunar-javascript 保持外部依赖。
 import { build } from 'esbuild'
-import { mkdirSync, copyFileSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, copyFileSync, readFileSync } from 'node:fs'
 
 const outdir = 'dist'
 mkdirSync(outdir, { recursive: true })
@@ -34,5 +34,6 @@ if (missing.length) {
   console.error('✗ CJS 产物缺少导出：', missing.join(', '))
   process.exit(1)
 }
-writeFileSync(`${outdir}/.built`, new Date().toISOString())
+// ⚠️ 不写时间戳标记文件：它会让每次构建的 tarball shasum 都不同，
+//    与"可复算 / 逐字节一致"的定位自相矛盾（实测：两次 npm pack 的 shasum 不一致）
 console.log(`✓ dist 生成：index.cjs / conventions.cjs / *.d.ts（${pkg.name}@${pkg.version}）`)
