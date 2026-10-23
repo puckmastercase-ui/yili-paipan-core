@@ -1,0 +1,64 @@
+{
+  "name": "yilibazi-core",
+  "version": "0.1.0",
+  "description": "Deterministic Four Pillars (BaZi) core with every boundary convention disclosed — slot-midpoint granularity, exact solar terms, early-Zi day rollover, and an ambiguity report that shows the alternative chart when a convention would change the answer.",
+  "keywords": [
+    "bazi",
+    "four-pillars",
+    "八字",
+    "排盘",
+    "chinese-astrology",
+    "solar-terms",
+    "lunar-calendar",
+    "deterministic"
+  ],
+  "license": "MIT",
+  "author": "Yili Paipan <https://www.yilibazi.com>",
+  "homepage": "https://www.yilibazi.com/method.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puckmastercase-ui/yili-paipan-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/puckmastercase-ui/yili-paipan-core/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./src/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./src/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./conventions": {
+      "types": "./dist/conventions.d.ts",
+      "import": "./src/conventions.js",
+      "require": "./dist/conventions.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src/",
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build-cjs.mjs",
+    "prepack": "npm run build && npm test",
+    "pack:dry": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "lunar-javascript": "^1.7.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.5"
+  }
+}
